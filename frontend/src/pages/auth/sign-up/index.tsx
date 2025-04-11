@@ -16,8 +16,17 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import Swal from "sweetalert2";
+import axios from "axios";
+
 
 const formSchema = z.object({
+    firstName: z.string().min(2, {
+        message: "Firstname must be at least 2 characters.",
+    }),
+    lastName: z.string().min(2, {
+        message: "Lastname must be at least 2 characters.",
+    }),
     username: z.string().min(2, {
         message: "Username must be at least 2 characters.",
     }),
@@ -27,18 +36,50 @@ const formSchema = z.object({
     condition: z.boolean().default(false).optional(),
 });
 
+
 export default function SignUp() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            firstName: "",
+            lastName:"",
             username: "",
             password: "",
             condition: true,
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values);
+        try {
+
+            // Only send startDate and endDate to the API
+            const apiData = {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.username,
+                password: values.password,
+            };
+
+            // Make the POST request with the token in the header
+            const response = await axios.post("/api/user/register", apiData);
+
+            console.log(response);
+            Swal.fire({
+                title: "User registered",
+                text: "User registered successfully.",
+                icon: "success",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Operation Failed",
+                text: "An error occurred while registering.",
+                confirmButtonColor: "#003F88",
+            });
+        }
     }
 
     const [showPassword, setShowPassword] = useState(false);
@@ -49,10 +90,10 @@ export default function SignUp() {
             style={{ backgroundImage: 'url(/background-image.svg)' }}
         >
             {/* Left Panel */}
-            <div className="w-full md:max-w-md bg-white p-8 md:p-10 m-0 md:m-18 shadow-lg flex flex-col rounded-none md:rounded-3xl z-10">
-                <div className="mb-6">
+            <div className="w-full md:max-w-md bg-white p-8 md:p-10 m-0 md:m-5 shadow-lg flex flex-col rounded-none md:rounded-3xl z-10">
+                <div>
                     {/* Logo */}
-                    <div className="flex justify-center gap-2 mb-4">
+                    <div className="flex justify-center gap-2">
                         <img src="/logo.png" alt="PULSE Logo" className="w-100% h-25" />
                     </div>
                     <h2 className="text-center text-xl font-bold text-black">Sign Up</h2>
@@ -60,6 +101,36 @@ export default function SignUp() {
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+                        {/* Firstname */}
+                        <FormField
+                            control={form.control}
+                            name="firstName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Firstname</FormLabel>
+                                    <FormControl>
+                                        <Input className="rounded-2xl" placeholder="Enter firstname here" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        {/* Username */}
+                        <FormField
+                            control={form.control}
+                            name="lastName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Lastname</FormLabel>
+                                    <FormControl>
+                                        <Input className="rounded-2xl" placeholder="Enter lastname here" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
                         {/* Username */}
                         <FormField
                             control={form.control}

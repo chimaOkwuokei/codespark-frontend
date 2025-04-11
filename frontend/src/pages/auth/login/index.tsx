@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom"
 import { z } from "zod";
 import {
   Form,
@@ -36,9 +37,12 @@ export default function Login() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    // Navigate to /user
+    navigate("/user/latest-news");
   }
 
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div
@@ -46,10 +50,10 @@ export default function Login() {
       style={{ backgroundImage: 'url(/background-image.svg)' }}
     >
       {/* Left Panel */}
-      <div className="w-full md:max-w-md bg-white p-8 md:p-10 m-0 md:m-18 shadow-lg flex flex-col rounded-none md:rounded-3xl z-10">
-        <div className="mb-6">
+      <div className="w-full md:max-w-md bg-white p-8 md:p-10 m-0 md:m-5 shadow-lg flex flex-col rounded-none md:rounded-3xl z-10">
+        <div>
           {/* Logo */}
-          <div className="flex justify-center gap-2 mb-4">
+          <div className="flex justify-center gap-2">
             <img src="/logo.png" alt="PULSE Logo" className="w-100% h-25" />
           </div>
           <h2 className="text-center text-xl font-bold text-black">Login</h2>

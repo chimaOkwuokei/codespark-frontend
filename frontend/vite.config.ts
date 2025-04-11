@@ -15,6 +15,16 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
+  server: {
+    proxy: {
+      // proxy's serve as temporary solutions for cors errors
+      "/api": {
+        target: "https://codespark-backend.onrender.com",
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
