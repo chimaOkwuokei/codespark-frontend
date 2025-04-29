@@ -20,6 +20,7 @@ export default defineConfig({
       // proxy's serve as temporary solutions for cors errors
       "/api": {
         target: "https://codespark-backend.onrender.com",
+        //  target: "https://sunfish-saving-killdeer.ngrok-free.app"
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ""),
       },

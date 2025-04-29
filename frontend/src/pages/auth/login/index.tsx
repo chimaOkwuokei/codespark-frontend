@@ -16,10 +16,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  email: z.string().min(2, {
+    message: "Email must be at least 2 characters.",
   }),
   password: z.string().min(2, {
     message: "Password must be at least 2 characters.",
@@ -30,15 +33,49 @@ export default function Login() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    // Navigate to /user
-    navigate("/user/latest-news");
+    try {
+      const response = await axios.post("/api/auth/login", values);
+
+      console.log(response);
+      // the API response contains an access token
+      const { accessToken } = response.data;
+
+      // Save the token in localStorage
+      localStorage.setItem("accessToken", accessToken);
+
+      // Decode the token to get user details
+      const decodedToken = jwtDecode(accessToken) as {
+        id: string;
+        email: string;
+        firstName?: string;
+        lastName?: string;
+      };
+
+      // Extract the user details
+      const { id, email, firstName, lastName } = decodedToken;
+
+      console.log("Decoded Token:", { id, email, firstName, lastName });
+
+      localStorage.setItem("email", email); 
+      navigate("/user/latest-news");
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message || "An unexpected error occurred.";
+
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: errorMessage,
+        confirmButtonColor: "#003F88",
+      });
+    }
   }
 
   const [showPassword, setShowPassword] = useState(false);
@@ -61,13 +98,13 @@ export default function Login() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            {/* Username */}
+            {/* email */}
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input className="rounded-2xl" placeholder="Enter email address here" {...field} />
                   </FormControl>

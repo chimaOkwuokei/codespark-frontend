@@ -18,6 +18,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"
 
 
 const formSchema = z.object({
@@ -33,6 +34,9 @@ const formSchema = z.object({
     password: z.string().min(2, {
         message: "Password must be at least 2 characters.",
     }),
+    phone: z.string().min(2, {
+        message: "Phone number must be at least 2 characters.",
+    }),
     condition: z.boolean().default(false).optional(),
 });
 
@@ -42,9 +46,10 @@ export default function SignUp() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             firstName: "",
-            lastName:"",
+            lastName: "",
             username: "",
             password: "",
+            phone: "",
             condition: true,
         },
     });
@@ -59,12 +64,18 @@ export default function SignUp() {
                 lastName: values.lastName,
                 email: values.username,
                 password: values.password,
+                phone: values.phone
             };
 
             // Make the POST request with the token in the header
             const response = await axios.post("/api/user/register", apiData);
 
             console.log(response);
+            
+            //store access token to local storage after sign up
+            const token = response.data
+            localStorage.setItem("accessToken", token);
+
             Swal.fire({
                 title: "User registered",
                 text: "User registered successfully.",
@@ -72,17 +83,23 @@ export default function SignUp() {
                 timer: 2000,
                 showConfirmButton: false,
             });
-        } catch (error) {
+
+            localStorage.setItem("firstname", values.firstName);
+            navigate("/channel-subscription");
+        } catch (error: any) {
+            const errorMessage =
+                error.response?.data?.message || "An unexpected error occurred.";
             Swal.fire({
                 icon: "error",
                 title: "Operation Failed",
-                text: "An error occurred while registering.",
+                text: errorMessage,
                 confirmButtonColor: "#003F88",
             });
         }
     }
 
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div
@@ -90,7 +107,7 @@ export default function SignUp() {
             style={{ backgroundImage: 'url(/background-image.svg)' }}
         >
             {/* Left Panel */}
-            <div className="w-full md:max-w-md bg-white p-8 md:p-10 m-0 md:m-5 shadow-lg flex flex-col rounded-none md:rounded-3xl z-10">
+            <div className="w-full md:max-w-md bg-white p-8 md:p-10 m-0 md:m-5  shadow-lg flex flex-col rounded-none md:rounded-3xl z-10">
                 <div>
                     {/* Logo */}
                     <div className="flex justify-center gap-2">
@@ -131,6 +148,20 @@ export default function SignUp() {
                             )}
                         />
 
+                        {/* enter phone number */}
+                        <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Phone Number</FormLabel>
+                                    <FormControl>
+                                        <Input className="rounded-2xl" placeholder="Enter phone number here" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         {/* Username */}
                         <FormField
                             control={form.control}
@@ -210,7 +241,7 @@ export default function SignUp() {
                     </form>
                 </Form>
 
-                <div className="pt-15 text-xs text-center text-gray-500">
+                <div className="pt-2 text-xs text-center text-gray-500">
                     Have an account? <a href="/login" className="hover:underline text-[#2B366F]">Log in</a>
                 </div>
             </div>

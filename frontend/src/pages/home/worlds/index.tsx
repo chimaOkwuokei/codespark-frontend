@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
 import { Card } from "@/components/ui/card"
 
-export default function EntertainmentNewsUi() {
+export default function WorldNewsUi() {
     const [newsData, setNewsData] = useState<any[]>([])
     const [category, setCategory] = useState("general")
     const [loading, setLoading] = useState(true)

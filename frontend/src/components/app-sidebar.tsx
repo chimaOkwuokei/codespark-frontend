@@ -1,5 +1,16 @@
-import { Calendar, Home, Settings, Box, BookText, MessageCircleQuestion, ChevronUp } from "lucide-react"
-// import Starfire from '@/assets/starfire.jpg'
+import {
+    Home,
+    Newspaper,
+    Globe,
+    Trophy,
+    Briefcase,
+    Film,
+    Cpu,
+    FlaskConical,
+    HeartPulse,
+    LogOut,
+    Settings
+} from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
@@ -14,58 +25,74 @@ import {
 } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { useEffect, useState } from "react"
+import Swal from "sweetalert2"
+import { Button } from "./ui/button"
 // import { useUser } from "../UserContext";
 // Menu items.
 const items = [
     {
-        title: "Latest",
+        title: "Latest PAU News",
         url: "/user/latest-news",
-        icon: Home,
+        icon: Home, // Good for main/news home
     },
     {
-        title: "Events",
-        url: "#",
-        icon: Box,
+        title: "National",
+        url: "/user/national",
+        icon: Newspaper, // Better for national news
+    },
+    {
+        title: "Worlds",
+        url: "/user/worlds",
+        icon: Globe, // Perfect for world news
     },
     {
         title: "Sports",
-        url: "#",
-        icon: BookText,
-    },
-    {
-        title: "Club News",
-        url: "#",
-        icon: Calendar,
+        url: "/user/sports",
+        icon: Trophy, // Ideal for sports
     },
     {
         title: "Business",
-        url: "#",
-        icon: MessageCircleQuestion,
+        url: "/user/business",
+        icon: Briefcase, // Represents business
     },
     {
         title: "Entertainment",
-        url: "#",
-        icon: MessageCircleQuestion,
-    },
-    {
-        title: "Blogs",
-        url: "#",
-        icon: MessageCircleQuestion,
+        url: "/user/entertainment",
+        icon: Film, // Best for entertainment
     },
     {
         title: "Technology",
-        url: "#",
-        icon: MessageCircleQuestion,
+        url: "/user/technology",
+        icon: Cpu, // Represents tech
     },
     {
-        title: "Settings",
-        url: "/user/profile",
-        icon: Settings,
+        title: "Science",
+        url: "/user/science",
+        icon: FlaskConical, // Science icon
+    },
+    {
+        title: "Health",
+        url: "/user/health",
+        icon: HeartPulse, // Medical/health icon
+    },
+    {
+        title: "Logout",
+        url: "/login",
+        icon: LogOut, // More appropriate than Settings
     },
 ]
 
 export function AppSidebar() {
     // const {user} = useUser();
+    const [email, setEmail] = useState<string | null>(null);
+
+    useEffect(() => {
+        // Retrieve email from localStorage
+        const storedEmail = localStorage.getItem("email");
+        setEmail(storedEmail);
+    }, []);
+
     return (
         <Sidebar>
             {/* sidebar header */}
@@ -84,7 +111,7 @@ export function AppSidebar() {
                     </div>
                     <div className="text-center">
                         <div className="flex space-x-2">
-                            <p className="font-semibold">Dara_1 </p>
+                            <p className="font-semibold">Welcome, {email || "Guest"} </p>
                             <img className="w-6 h-6" src="/settings.svg" alt="" />
                         </div>
                         <p className="text-sm text-gray-500">blogger</p>
@@ -97,53 +124,52 @@ export function AppSidebar() {
                     <SidebarGroupLabel className="text-xl text-white">Category</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {items.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <a href={item.url} className={item.url === location.pathname ? "bg-blue-700 text-white" : ''}>
-                                            <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
+                            {items.map((item) => {
+                                const title = item.title;
+                                const url = item.url;
+                                const category = title.toLowerCase();
+
+                                return (
+                                    <SidebarMenuItem key={title}>
+                                        <SidebarMenuButton asChild>
+                                            <a
+                                                href={url}
+                                                onClick={(e) => {
+                                                    if (title === "Logout") {
+                                                        e.preventDefault();
+                                                        localStorage.clear();
+                                                        Swal.fire({
+                                                            title: "Logged Out",
+                                                            text: "You have been logged out successfully.",
+                                                            icon: "success",
+                                                            timer: 1500,
+                                                            showConfirmButton: false,
+                                                        });
+                                                        setTimeout(() => {
+                                                            window.location.href = url;
+                                                        }, 1600);
+                                                        return;
+                                                    }
+
+                                                    // Save category if it's not Login or Latest PAU News
+                                                    if (!["login", "latest pau news"].includes(category)) {
+                                                        localStorage.setItem("category", category);
+                                                    }
+                                                }}
+                                                className={url === location.pathname ? "bg-blue-950 text-white" : ""}
+                                            >
+                                                <item.icon />
+                                                <span>{title}</span>
+                                            </a>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                );
+                            })}
                         </SidebarMenu>
+
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
-
-            {/* sidebar footer */}
-            {/* <SidebarFooter>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <SidebarMenuButton>
-                                    <Avatar className=' w-8 h-8 bg-blue-200 justify-center items-center'>
-                                        <AvatarImage/>
-                                    </Avatar> 
-                                    Placeholder
-                                    <ChevronUp className="ml-auto" />
-                                </SidebarMenuButton>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                side="top"
-                                className="w-[--radix-popper-anchor-width]"
-                            >
-                                <DropdownMenuItem>
-                                    <span>Account</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <span>Billing</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <span>Sign out</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarFooter> */}
         </Sidebar>
     )
 }
