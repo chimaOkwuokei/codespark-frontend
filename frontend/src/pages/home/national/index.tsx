@@ -12,6 +12,9 @@ export default function NationalNewsUi() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
+    // api url
+    const API_URL = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         const storedCategory = localStorage.getItem("category")
         const cat = storedCategory || "general"
@@ -22,7 +25,7 @@ export default function NationalNewsUi() {
                 setLoading(true)
                 setError(null)
                 const token = localStorage.getItem("accessToken")
-                const res = await fetch(`/api/news-update/${cat}`, {
+                const res = await fetch(`${API_URL}/api/news-update/${cat}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

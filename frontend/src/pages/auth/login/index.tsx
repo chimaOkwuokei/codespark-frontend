@@ -38,10 +38,14 @@ export default function Login() {
     },
   });
 
+  // api url
+  const API_URL = import.meta.env.VITE_API_URL;
+
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     try {
-      const response = await axios.post("/api/auth/login", values);
+      const response = await axios.post(`${API_URL}/api/auth/login`, values);
 
       console.log(response);
       // the API response contains an access token

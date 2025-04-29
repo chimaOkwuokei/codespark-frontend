@@ -16,13 +16,15 @@ export default function HealthNewsUi() {
         const storedCategory = localStorage.getItem("category")
         const cat = storedCategory || "general"
         setCategory(cat)
+        // api url
+        const API_URL = import.meta.env.VITE_API_URL;
 
         async function fetchNews() {
             try {
                 setLoading(true)
                 setError(null)
                 const token = localStorage.getItem("accessToken")
-                const res = await fetch(`/api/news-update/${cat}`, {
+                const res = await fetch(`${API_URL}/api/news-update/${cat}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

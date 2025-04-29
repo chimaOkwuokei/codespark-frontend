@@ -54,6 +54,9 @@ export default function SignUp() {
         },
     });
 
+    // api url
+    const API_URL = import.meta.env.VITE_API_URL;
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values);
         try {
@@ -68,7 +71,7 @@ export default function SignUp() {
             };
 
             // Make the POST request with the token in the header
-            const response = await axios.post("/api/user/register", apiData);
+            const response = await axios.post(`${API_URL}/api/user/register`, apiData);
 
             console.log(response);
             

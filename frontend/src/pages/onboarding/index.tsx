@@ -33,6 +33,8 @@ const OnboardingFormUi = () => {
     const [currentTab, setCurrentTab] = useState(0);
     const navigate = useNavigate();
     const [name, setName] = useState<string | null>(null);
+    // api url
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -96,7 +98,7 @@ const OnboardingFormUi = () => {
                 categoryIds: categoryIds,
             };
 
-            const response = await axios.post("/api/channel-subscription", apiData,
+            const response = await axios.post(`${API_URL}/api/channel-subscription`, apiData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
