@@ -9,12 +9,10 @@ import {
     FlaskConical,
     HeartPulse,
     LogOut,
-    Settings
 } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
@@ -23,11 +21,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { Button } from "./ui/button"
 // import { useUser } from "../UserContext";
 // Menu items.
 const items = [
