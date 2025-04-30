@@ -59,6 +59,7 @@ export default function SignUp() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values);
+        setLoading(true);
         try {
 
             // Only send startDate and endDate to the API
@@ -74,7 +75,7 @@ export default function SignUp() {
             const response = await axios.post(`${API_URL}/api/user/register`, apiData);
 
             console.log(response);
-            
+
             //store access token to local storage after sign up
             const token = response.data
             localStorage.setItem("accessToken", token);
@@ -98,12 +99,18 @@ export default function SignUp() {
                 text: errorMessage,
                 confirmButtonColor: "#003F88",
             });
+        } finally {
+            setLoading(false);
         }
     }
 
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
+    const handleDone = () => {
+        form.handleSubmit(onSubmit);
+    };
     return (
         <div
             className="flex flex-col md:flex-row h-screen w-full bg-cover bg-no-repeat bg-center"
@@ -234,7 +241,7 @@ export default function SignUp() {
                             )}
                         />
 
-                        <Button className="bg-[#2B366F] w-full" type="submit">
+                        <Button className="bg-[#2B366F] w-full" onClick={handleDone} loading={loading}>
                             Create Account
                         </Button>
 

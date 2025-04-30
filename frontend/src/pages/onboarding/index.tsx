@@ -69,6 +69,8 @@ const OnboardingFormUi = () => {
 
     async function onSubmit(data: z.infer<typeof formSchema>) {
         console.log("Submitted Data:", data);
+        setLoading(true);
+
         if (selectedCategories.length === 0 || selectedChannel.length === 0) {
             Swal.fire({
                 icon: "error",
@@ -115,9 +117,11 @@ const OnboardingFormUi = () => {
                 text: errorMessage,
                 confirmButtonColor: "#003F88",
             });
+        } finally {
+            setLoading(false);
         }
     };
-
+    const [loading, setLoading] = useState(false);
     const handleDone = () => {
         form.handleSubmit(onSubmit);
     };
@@ -233,6 +237,7 @@ const OnboardingFormUi = () => {
                                     <Button
                                         className="bg-[#2B366F] text-white px-6 py-2 rounded-full text-sm"
                                         onClick={handleDone}
+                                        loading={loading}
                                         disabled={selectedChannel.length === 0 || selectedCategories.length === 0}
                                     >
                                         Finish →

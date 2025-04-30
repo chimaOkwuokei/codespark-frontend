@@ -43,6 +43,7 @@ export default function Login() {
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
     console.log(values);
     try {
       const response = await axios.post(`${API_URL}/api/auth/login`, values);
@@ -67,7 +68,7 @@ export default function Login() {
 
       console.log("Decoded Token:", { id, email, firstName, lastName });
 
-      localStorage.setItem("email", email); 
+      localStorage.setItem("email", email);
       navigate("/user/latest-news");
     } catch (error: any) {
       const errorMessage =
@@ -79,11 +80,18 @@ export default function Login() {
         text: errorMessage,
         confirmButtonColor: "#003F88",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleDone = () => {
+    form.handleSubmit(onSubmit);
+  };
 
   return (
     <div
@@ -156,7 +164,9 @@ export default function Login() {
               </a>
             </div>
 
-            <Button className="bg-[#2B366F] w-full" type="submit">
+            <Button className="bg-[#2B366F] w-full"
+              onClick={handleDone}
+              loading={loading}>
               Log In
             </Button>
           </form>
