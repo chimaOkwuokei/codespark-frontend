@@ -11,7 +11,8 @@ export default defineConfig({
     VitePWA({
       strategies: 'injectManifest',
       srcDir: 'src/custom-sw',
-      filename: 'sw.ts'
+      filename: 'sw.ts',
+      registerType: 'autoUpdate' //🔄 Forces update when new version is available
     }),
     tailwindcss(),
   ],

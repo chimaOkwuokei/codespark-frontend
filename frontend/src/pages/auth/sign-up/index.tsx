@@ -233,17 +233,17 @@ export default function SignUp() {
                             )}
                         />
 
-                        {/* <FormField
+                        <FormField
                             control={form.control}
                             name="condition"
-                            render={({ field }) => (
+                            render={() => (
                                 <FormItem className="flex flex-row items-start space-x-0">
-                                    <FormControl>
+                                    {/* <FormControl>
                                         <Checkbox
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
-                                    </FormControl>
+                                    </FormControl> */}
                                     <div className="leading-none">
                                         <FormLabel className="text-xs">
                                             Remember email and password
@@ -252,7 +252,7 @@ export default function SignUp() {
                                     </div>
                                 </FormItem>
                             )}
-                        /> */}
+                        />
 
                         <Button className="bg-[#2B366F] w-full" onClick={handleDone} loading={loading}>
                             Create Account
