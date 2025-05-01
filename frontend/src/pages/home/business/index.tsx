@@ -119,15 +119,14 @@ export default function BusinessNewsUi() {
                             return (
                                 <div key={item.url || index} className="space-y-4">
                                     {displayItems.map((article: any, articleIndex: number) => (
-                                        <Card key={article.url || articleIndex} className="p-4 shadow-md">
-                                            {/* TODO: Make the images behave responsive. update the signin field phone number stuff */}
-                                            <div className="flex flex-col gap-4">
-                                                <div className="w-32 flex sm:flex-row">
+                                        <Card key={article.url || articleIndex} className="p-4 shadow-md rounded-xl">
+                                            <div className="flex flex-col sm:flex-row gap-4">
+                                                <div className="w-full sm:w-40 flex-shrink-0">
                                                     {(article.thumbnail_url || article.image) && (
                                                         <img
                                                             src={article.photo_url}
                                                             alt={article.title}
-                                                            className="w-full h-full object-cover rounded-lg"
+                                                            className="w-full aspect-[4/3] object-cover rounded-lg"
                                                             onError={(e) => {
                                                                 e.currentTarget.src = '/placeholder-news.png'
                                                             }}
@@ -135,31 +134,29 @@ export default function BusinessNewsUi() {
                                                     )}
                                                 </div>
 
-                                                <div className="flex-1">
-                                                    <h3 className="font-semibold mb-1">
-                                                        {article.title || "Untitled Article"}
-                                                    </h3>
-                                                    <p className="text-sm text-gray-600 mb-2">
-                                                        {article.description || article.snippet || "No description available"}
-                                                    </p>
-                                                    <div className="text-sm text-gray-500 flex flex-wrap items-center gap-1">
-                                                        {/* Authors */}
+                                                <div className="flex-1 flex flex-col justify-between">
+                                                    <div>
+                                                        <h3 className="font-semibold text-base sm:text-lg mb-1 line-clamp-2">
+                                                            {article.title || "Untitled Article"}
+                                                        </h3>
+                                                        <p className="text-sm text-gray-600 mb-2 line-clamp-3">
+                                                            {article.description || article.snippet || "No description available"}
+                                                        </p>
+                                                    </div>
+
+                                                    <div className="text-xs text-gray-500 flex flex-wrap items-center gap-1 mb-2">
                                                         {article.authors?.length > 0 && (
                                                             <>
                                                                 <span>By {Array.isArray(article.authors) ? article.authors.join(", ") : article.authors}</span>
                                                                 <span>•</span>
                                                             </>
                                                         )}
-
-                                                        {/* Source */}
                                                         {article.source_name && (
                                                             <>
                                                                 <span>{article.source_name}</span>
                                                                 <span>•</span>
                                                             </>
                                                         )}
-
-                                                        {/* Date */}
                                                         {article.published_datetime_utc && (
                                                             <span>
                                                                 {new Date(article.published_datetime_utc).toLocaleDateString('en-US', {
@@ -170,8 +167,9 @@ export default function BusinessNewsUi() {
                                                             </span>
                                                         )}
                                                     </div>
+
                                                     <Button
-                                                        className="mt-2 bg-[#2B366F] rounded-3xl text-sm px-4 py-1"
+                                                        className="self-start bg-[#2B366F] rounded-3xl text-sm px-4 py-1"
                                                         onClick={() => window.open(article.url || article.link, '_blank')}
                                                     >
                                                         Read
@@ -179,6 +177,7 @@ export default function BusinessNewsUi() {
                                                 </div>
                                             </div>
                                         </Card>
+
                                     ))}
                                 </div>
                             )

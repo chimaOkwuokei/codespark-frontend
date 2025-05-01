@@ -36,8 +36,8 @@ const items = [
         icon: Newspaper, // Better for national news
     },
     {
-        title: "Worlds",
-        url: "/user/worlds",
+        title: "World",
+        url: "/user/world",
         icon: Globe, // Perfect for world news
     },
     {

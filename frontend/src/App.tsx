@@ -30,7 +30,7 @@ function App() {
         <Route path="/user" element={<UserLayout />}>
           <Route path="latest-news" element={<LatestNewsUi />} />
           <Route path="national" element={<NationalNewsUi />} />
-          <Route path="worlds" element={<WorldNewsUi />} />
+          <Route path="world" element={<WorldNewsUi />} />
           <Route path="sports" element={<SportNewsUi />} />
           <Route path="business" element={<BusinessNewsUi />} />
           <Route path="entertainment" element={<EntertainmentNewsUi />} />
