@@ -10,8 +10,8 @@ export default defineConfig({
     react(),
     VitePWA({
       strategies: 'injectManifest',
-      srcDir: 'src/custom-sw',
-      filename: 'sw.ts',
+      // srcDir: 'src/custom-sw',
+      // filename: 'sw.ts',
       registerType: 'autoUpdate' //🔄 Forces update when new version is available
     }),
     tailwindcss(),
