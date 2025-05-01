@@ -94,7 +94,7 @@ export default function TechnologyNewsUi() {
         <div className="min-h-screen bg-[#E7EAFD] px-4 py-6">
             <div className="max-w-screen-xl mx-auto flex flex-col xl:flex-row gap-6">
                 {/* Left Content */}
-                <div className="w-full xl:w-2/3 space-y-8">
+                <div className="w-full space-y-8">
                     <div className="flex xl:flex-row justify-between">
                         <h2 className="text-xl font-bold mb-3">Top Stories in {category}</h2>
                         <div className="relative w-full">

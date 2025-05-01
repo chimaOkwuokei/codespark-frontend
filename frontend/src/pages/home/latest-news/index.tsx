@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -10,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Search } from "lucide-react"
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
 import React from "react"
 import { Card } from "@/components/ui/card"
@@ -27,7 +25,7 @@ export default function LatestNewsUi() {
       <div className="max-w-screen-xl mx-auto flex flex-col xl:flex-row gap-6">
 
         {/* Left Content */}
-        <div className="w-full xl:w-2/3 space-y-8">
+        <div className="w-full space-y-8">
           {/* Dropdown */}
           <div className="flex justify-between items-center">
             <DropdownMenu>
@@ -99,11 +97,48 @@ export default function LatestNewsUi() {
 
         {/* Right Content */}
         <div className="w-full xl:w-1/3 space-y-6">
-          {/* Search */}
-          <div className="relative w-full">
-            <Input placeholder="Search" className="pr-10" />
-            <Search className="absolute right-3 top-3 h-5 w-5 text-gray-500" />
+          <div className="flex items-center justify-between w-full max-w-2xl bg-[#e9ecf7]  rounded-full">
+            {/* Search Bar */}
+            <div className="flex items-center bg-white rounded-full flex-grow max-w-[80%] px-4 py-2">
+              <input
+                type="text"
+                placeholder="Search"
+                className="flex-1 bg-transparent outline-none text-sm text-gray-800"
+              />
+              <div className="bg-[#2B366F] p-2 rounded-full flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* Profile Section */}
+            <div className="relative ml-4 flex-shrink-0">
+              <img
+                src="/profile.svg"
+                alt="Profile"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <img
+                src="/settings.svg"
+                alt="Settings"
+                className="w-5 h-5 absolute -bottom-1 -right-1"
+              />
+            </div>
           </div>
+
+
 
           {/* Sports News */}
           <div className="space-y-3">

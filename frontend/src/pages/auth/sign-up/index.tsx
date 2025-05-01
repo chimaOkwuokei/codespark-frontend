@@ -15,7 +15,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
+// import { Checkbox } from "@/components/ui/checkbox";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
@@ -57,6 +57,19 @@ export default function SignUp() {
     // api url
     const API_URL = import.meta.env.VITE_API_URL;
 
+    // helper function that converts nigerian numbers to international format
+    function formatPhoneNumber(phone:string) {
+        // Remove all non-digit characters just in case
+        const digits = phone.replace(/\D/g, '');
+
+        // Check if it starts with '0' and is 11 digits long
+        if (digits.length === 11 && digits.startsWith('0')) {
+            return '+234' + digits.slice(1);
+        }
+
+        // If already in international format or invalid, return as-is or handle accordingly
+        return phone;
+    }
     async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values);
         setLoading(true);
@@ -68,7 +81,7 @@ export default function SignUp() {
                 lastName: values.lastName,
                 email: values.username,
                 password: values.password,
-                phone: values.phone
+                phone: formatPhoneNumber(values.phone)
             };
 
             // Make the POST request with the token in the header
@@ -113,10 +126,10 @@ export default function SignUp() {
     };
     return (
         <div
-            className="flex flex-col md:flex-row h-screen w-full bg-cover bg-no-repeat bg-center"
+            className="w-full bg-cover bg-no-repeat bg-center"
             style={{ backgroundImage: 'url(/background-image.svg)' }}
         >
-            {/* Left Panel */}
+            <div className="min-h-screen flex items-center justify-center">
             <div className="w-full md:max-w-md bg-white p-8 md:p-10 m-0 md:m-5  shadow-lg flex flex-col rounded-none md:rounded-3xl z-10">
                 <div>
                     {/* Logo */}
@@ -220,7 +233,7 @@ export default function SignUp() {
                             )}
                         />
 
-                        <FormField
+                        {/* <FormField
                             control={form.control}
                             name="condition"
                             render={({ field }) => (
@@ -239,7 +252,7 @@ export default function SignUp() {
                                     </div>
                                 </FormItem>
                             )}
-                        />
+                        /> */}
 
                         <Button className="bg-[#2B366F] w-full" onClick={handleDone} loading={loading}>
                             Create Account
@@ -254,6 +267,7 @@ export default function SignUp() {
                 <div className="pt-2 text-xs text-center text-gray-500">
                     Have an account? <a href="/login" className="hover:underline text-[#2B366F]">Log in</a>
                 </div>
+            </div>
             </div>
 
             {/* Right Filler */}

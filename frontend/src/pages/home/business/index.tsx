@@ -94,7 +94,7 @@ export default function BusinessNewsUi() {
         <div className="min-h-screen bg-[#E7EAFD] px-4 py-6">
             <div className="max-w-screen-xl mx-auto flex flex-col xl:flex-row gap-6">
                 {/* Left Content */}
-                <div className="w-full xl:w-2/3 space-y-8">
+                <div className="w-full space-y-8">
                     <div className="flex xl:flex-row justify-between">
                         <h2 className="text-xl font-bold mb-3">Top Stories in {category}</h2>
                         <div className="relative w-full">
@@ -120,17 +120,21 @@ export default function BusinessNewsUi() {
                                 <div key={item.url || index} className="space-y-4">
                                     {displayItems.map((article: any, articleIndex: number) => (
                                         <Card key={article.url || articleIndex} className="p-4 shadow-md">
-                                            <div className="flex gap-4">
-                                                {(article.thumbnail_url || article.image) && (
-                                                    <img
-                                                        src={article.photo_url}
-                                                        alt={article.title}
-                                                        className="w-24 h-24 object-cover rounded-lg"
-                                                        onError={(e) => {
-                                                            e.currentTarget.src = '/placeholder-news.png'
-                                                        }}
-                                                    />
-                                                )}
+                                            {/* TODO: Make the images behave responsive. update the signin field phone number stuff */}
+                                            <div className="flex flex-col gap-4">
+                                                <div className="w-32 flex sm:flex-row">
+                                                    {(article.thumbnail_url || article.image) && (
+                                                        <img
+                                                            src={article.photo_url}
+                                                            alt={article.title}
+                                                            className="w-full h-full object-cover rounded-lg"
+                                                            onError={(e) => {
+                                                                e.currentTarget.src = '/placeholder-news.png'
+                                                            }}
+                                                        />
+                                                    )}
+                                                </div>
+
                                                 <div className="flex-1">
                                                     <h3 className="font-semibold mb-1">
                                                         {article.title || "Untitled Article"}

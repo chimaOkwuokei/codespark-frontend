@@ -21,7 +21,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 // import { useUser } from "../UserContext";
 // Menu items.
@@ -80,38 +79,17 @@ const items = [
 
 export function AppSidebar() {
     // const {user} = useUser();
-    const [email, setEmail] = useState<string | null>(null);
-
-    useEffect(() => {
-        // Retrieve email from localStorage
-        const storedEmail = localStorage.getItem("email");
-        setEmail(storedEmail);
-    }, []);
 
     return (
         <Sidebar>
             {/* sidebar header */}
-            <SidebarHeader className="flex flex-col items-center py-6 space-y-6">
+            <SidebarHeader className="flex flex-col items-center py-12 space-y-6">
                 {/* Logo Section */}
                 <SidebarGroup className="flex flex-col items-center space-y-2">
                     <SidebarGroupLabel>
                         <img src="/logo.png" alt="Pulse Logo" className="h-16" />
                     </SidebarGroupLabel>
                 </SidebarGroup>
-
-                {/* Profile Avatar Section */}
-                <div className="flex flex-col items-center space-y-1">
-                    <div className="w-25 h-25 rounded-full flex items-center justify-center">
-                        <img src="/profile.svg" alt="Profile Image" />
-                    </div>
-                    <div className="text-center">
-                        <div className="flex space-x-2">
-                            <p className="font-semibold">Welcome, {email || "Guest"} </p>
-                            <img className="w-6 h-6" src="/settings.svg" alt="" />
-                        </div>
-                        <p className="text-sm text-gray-500">blogger</p>
-                    </div>
-                </div>
             </SidebarHeader>
             {/* sidebar content */}
             <SidebarContent className="m-4">
