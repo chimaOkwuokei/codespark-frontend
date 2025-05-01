@@ -31,8 +31,8 @@ const formSchema = z.object({
     username: z.string().min(2, {
         message: "Username must be at least 2 characters.",
     }),
-    password: z.string().min(2, {
-        message: "Password must be at least 2 characters.",
+    password: z.string().min(8, {
+        message: "Password must be at least 8 characters.",
     }),
     phone: z.string().min(2, {
         message: "Phone number must be at least 2 characters.",
@@ -101,7 +101,7 @@ export default function SignUp() {
                 showConfirmButton: false,
             });
 
-            localStorage.setItem("firstname", values.firstName);
+            localStorage.setItem("firstName", values.firstName);
             navigate("/channel-subscription");
         } catch (error: any) {
             const errorMessage =

@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
 import { Card } from "@/components/ui/card"
 
 export default function ScienceNewsUi() {
@@ -94,13 +92,9 @@ export default function ScienceNewsUi() {
         <div className="min-h-screen bg-[#E7EAFD] px-4 py-6">
             <div className="w-full mx-auto flex flex-col xl:flex-row gap-6">
                 {/* Left Content */}
-                <div className="w-full space-y-8">
+                <div className="w-full space-y-2">
                     <div className="flex xl:flex-row justify-between">
                         <h2 className="text-xl font-bold mb-3">Top Stories in {category}</h2>
-                        <div className="relative w-full">
-                            <Input placeholder="Search" className="pr-10" />
-                            <Search className="absolute right-3 top-3 h-5 w-5 text-gray-500" />
-                        </div>
                     </div>
 
 

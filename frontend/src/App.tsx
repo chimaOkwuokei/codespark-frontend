@@ -6,27 +6,27 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { useEffect, useState } from 'react';
 
 function UserLayout() {
-  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
 
   useEffect(() => {
-    const userEmail = localStorage.getItem('email');
-    if (userEmail) {
-      setEmail(userEmail);
+    const userFirstName = localStorage.getItem('firstName');
+    if (userFirstName) {
+      setFirstName(userFirstName);
     }
   }, []);
   return (
     <SidebarProvider>
       <AppSidebar />
       <main className='w-full'>
-        <div className="flex flex-row items-center justify-between gap-4 pt-7 px-4">
+        <div className="flex flex-row items-center justify-between gap-4 pt-7 p-5 px-4">
           {/* Sidebar Trigger */}
           <div className="flex-shrink-0">
             <SidebarTrigger />
           </div>
 
           {/* Welcome Message */}
-          <div className="xs:block text-sm text-gray-700 whitespace-nowrap">
-            Welcome, <span className="font-semibold">{email || 'Guest'}</span>
+          <div className="xs:block text-xl text-[white] whitespace-nowrap">
+            Welcome, <span className="font-semibold">{firstName || 'Guest'}</span>
           </div>
 
           {/* Search + Profile */}
@@ -38,7 +38,7 @@ function UserLayout() {
                 placeholder="Search"
                 className="flex-1 bg-transparent outline-none text-sm text-gray-800"
               />
-              <div className="bg-[#2B366F] p-2 rounded-full flex items-center justify-center ml-2">
+              <div className="bg-[white] p-2 rounded-full flex items-center justify-center ml-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-4 h-4 text-white"
@@ -57,10 +57,10 @@ function UserLayout() {
             </div>
 
             {/* Icon-only search for small screens */}
-            <div className="sm:hidden bg-[#2B366F] p-2 rounded-full flex items-center justify-center">
+            <div className="sm:hidden bg-[white] p-2 rounded-full flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-white"
+                className="w-5 h-5 text-#E9ECF7"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -80,11 +80,6 @@ function UserLayout() {
                 src="/profile.svg"
                 alt="Profile"
                 className="w-10 h-10 rounded-full object-cover"
-              />
-              <img
-                src="/settings.svg"
-                alt="Settings"
-                className="w-5 h-5 absolute -bottom-1 -right-1"
               />
             </div>
           </div>

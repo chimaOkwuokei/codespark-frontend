@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { PanelLeftIcon } from "lucide-react"
+import { Menu } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -138,7 +138,7 @@ function SidebarProvider({
           }
           className={cn(
             // the place where the sidebar icon is
-            "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full bg-[#E7EAFD]",
+            "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full bg-[#2B366F]",
             className
           )}
           {...props}
@@ -266,14 +266,15 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn("size-10", className)} // Increase button size to accommodate larger icon
+      className={cn("size-10 hover:bg-[#424c75] hover:text-[#2B366F] dark:hover:bg-[#2B366F] dark:hover:text-white", className)} // Increase button size to accommodate larger icon
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
       {...props}
     >
-      <PanelLeftIcon style={{ width: "30px", height: "30px" }} /> {/* Increase icon size */}
+      {/* <PanelLeftIcon style={{ width: "30px", height: "30px" }} /> Increase icon size */}
+      <Menu style={{ width: "30px", height: "30px", color: "white" }}/>
       <span className="sr-only ">Toggle Sidebar</span>
     </Button>
   );

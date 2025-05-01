@@ -59,7 +59,7 @@ export default function Login() {
       const decodedToken = jwtDecode(accessToken) as {
         id: string;
         email: string;
-        firstName?: string;
+        firstName: string;
         lastName?: string;
       };
 
@@ -68,7 +68,9 @@ export default function Login() {
 
       console.log("Decoded Token:", { id, email, firstName, lastName });
 
-      localStorage.setItem("email", email);
+      const capitalizedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+      localStorage.setItem("firstName", capitalizedFirstName);
+
       navigate("/user/latest-news");
     } catch (error: any) {
       const errorMessage =
