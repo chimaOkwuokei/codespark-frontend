@@ -82,6 +82,7 @@ export function AppSidebar() {
 
     return (
         <Sidebar>
+            
             {/* sidebar header */}
             <SidebarHeader className="flex flex-col items-center py-12 space-y-6">
                 {/* Logo Section */}
