@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      strategies: 'injectManifest',
+      // strategies: 'injectManifest',
       // srcDir: 'src/custom-sw',
       // filename: 'sw.ts',
       registerType: 'autoUpdate' //🔄 Forces update when new version is available
