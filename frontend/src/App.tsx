@@ -9,7 +9,7 @@ function UserLayout() {
     <SidebarProvider>
       <AppSidebar />
       <main className='w-full'>
-        <SidebarTrigger />
+        <SidebarTrigger/>
         <Outlet /> {/* Nested routes will render here */}
       </main>
     </SidebarProvider>

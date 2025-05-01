@@ -191,9 +191,9 @@ export default function SignUp() {
                             name="username"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Username</FormLabel>
+                                    <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input className="rounded-2xl" placeholder="Enter username here" {...field} />
+                                        <Input className="rounded-2xl" placeholder="Enter email address here" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
