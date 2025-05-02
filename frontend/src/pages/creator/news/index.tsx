@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/form";
 import cameraIcon from "@/assets/camera.svg";
 import { useState } from "react";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -50,9 +52,62 @@ export default function CreateNewsUi() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Form Values:", values);
-  }
+  const [loading, setLoading] = useState(false);
+
+  // api url
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    setLoading(true);
+    console.log("Submitted Data:", data);
+    try {
+      // // Only send startDate and endDate to the API
+      const apidata = {
+        title: data.title,
+        content: data.content,
+        image: data.image,
+      };
+
+      const token = localStorage.getItem("accessToken"); // or whatever key you used
+
+      // Make the POST request with the token in the header
+      const response = await axios.post(
+        `${API_URL}/api/blog-management`,
+        apidata,
+        {
+          headers: {
+            // Token currently returns bearer
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(response);
+      Swal.fire({
+        title: "News sent",
+        text: "News sent successfully.",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message || "An unexpected error occurred.";
+      Swal.fire({
+        icon: "error",
+        title: "Operation Failed",
+        text: errorMessage,
+        confirmButtonColor: "#003F88",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDone = () => {
+    form.handleSubmit(onSubmit);
+  };
 
   return (
     <div className="min-h-screen w-full bg-[#E7EAF8] px-4 py-10">
@@ -127,7 +182,7 @@ export default function CreateNewsUi() {
 
             {/* Schedule and Publish */}
             <div className="flex items-center justify-between">
-              <Button type="submit" className="bg-[#2B366F] hover:bg-[#424c75] text-white">
+              <Button onClick={handleDone} loading={loading} className="bg-[#2B366F] hover:bg-[#424c75] text-white">
                 Publish
               </Button>
             </div>
