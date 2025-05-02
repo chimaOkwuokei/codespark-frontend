@@ -161,7 +161,10 @@ export default function Login() {
               />
 
               <div className="text-xs text-left text-gray-500">
-                <a href="#" className="hover:underline">
+                <a href="#" className="hover:underline" onClick={(e) => {
+                  e.preventDefault();
+                  alert("Forgot Password — Coming soon!");
+                }}>
                   Forgot Password?
                 </a>
               </div>

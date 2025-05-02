@@ -18,10 +18,19 @@ export default function HeroUi() {
                         <img src="/logo.png" alt="Pulse Logo" className="h-14 sm:h-16" />
                     </div>
                     <nav className="space-x-4 sm:space-x-6 font-medium text-sm sm:text-lg hidden md:flex">
-                        <a href="#" className="hover:underline">Home</a>
-                        <a href="#" className="hover:underline">About</a>
-                        <a href="#" className="hover:underline">Services</a>
-                        <a href="#" className="hover:underline">Contact</a>
+                        {["Home", "About", "Services", "Contact"].map((item, i) => (
+                            <a
+                                key={i}
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    alert(`${item} — Coming soon!`);
+                                }}
+                                className="hover:underline cursor-pointer"
+                            >
+                                {item}
+                            </a>
+                        ))}
                     </nav>
                     <Button
                         size="lg"

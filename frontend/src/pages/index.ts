@@ -14,6 +14,11 @@ import HealthNewsUi from "./home/health";
 import ScienceNewsUi from "./home/science";
 import OnboardingFormUi from "./onboarding";
 import HeroUi from "./onboarding/cta";
+import UserLayout from "./home/user-layout";
+import AdminLayout from "./admin/admin-layout";
+import CreateNewsUi from "./admin/news";
+import ProfileDisplayUi from "./admin/profile";
+
 export {
     Login,
     SignUp,
@@ -30,5 +35,9 @@ export {
     HealthNewsUi,
     ScienceNewsUi,
     OnboardingFormUi,
-    HeroUi
+    HeroUi,
+    UserLayout,
+    AdminLayout,
+    CreateNewsUi,
+    ProfileDisplayUi,
 }
