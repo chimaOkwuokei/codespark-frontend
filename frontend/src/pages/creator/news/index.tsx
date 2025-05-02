@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CalendarIcon, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 // import { cn } from "@/lib/utils";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,32 +13,42 @@ import {
   FormControl,
   FormField,
   FormItem,
-//   FormLabel,
+  //   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import cameraIcon from "@/assets/camera.svg";
+import { useState } from "react";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  text: z.string().min(1, "Text is required"),
-  category: z.string().min(1, "Category is required"),
+  content: z.string().min(1, "Content is required"),
+  image: z
+    .any()
+    .refine((file) => file instanceof File || (file && file.name), "Image is required"),
+
 });
 
 export default function CreateNewsUi() {
+  const [image, setImage] = useState<{ preview: string; file: File } | null>(null);
+
+  const imagehandleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setCard: React.Dispatch<React.SetStateAction<{ preview: string; file: File } | null>>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const preview = URL.createObjectURL(file);
+      setCard({ preview, file });
+      form.setValue("image", file); // blob goes into form
+    }
+  };
   const form = useForm<z.infer<typeof formSchema>>({
-          resolver: zodResolver(formSchema),
-          defaultValues: {
-              title: "",
-              text: "",
-              category: "",
-          },
-      });
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      content: "",
+    },
+  });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("Form Values:", values);
@@ -71,12 +81,12 @@ export default function CreateNewsUi() {
             {/* Text */}
             <FormField
               control={form.control}
-              name="text"
+              name="content"
               render={({ field }) => (
                 <FormItem className="relative">
                   <FormControl>
                     <Textarea
-                      placeholder="Text"
+                      placeholder="Content"
                       {...field}
                       className="h-36 rounded-xl pr-10 placeholder:text-[#2B366F]"
                     />
@@ -87,38 +97,36 @@ export default function CreateNewsUi() {
               )}
             />
 
-            {/* Category Dropdown */}
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger className="rounded-xl text-[#2B366F]">
-                        <SelectValue placeholder="*Category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="News">News</SelectItem>
-                        <SelectItem value="Events">Events</SelectItem>
-                        <SelectItem value="Sports">Sports</SelectItem>
-                        <SelectItem value="Clubs">Clubs</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* image upload */}
+            <div className="space-y-6">
+              {/* Instruction */}
+              <p className="text-sm text-gray-600 mb-8">
+                Images need to be at least 500 x 500 pixels and a maximum of 1200 x 1200 pixels.
+              </p>
+              <div>
+                <p className="text-sm font-semibold mb-2">Image of News</p>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => imagehandleFileChange(event, setImage)}
+                  className="hidden"
+                  id="image-upload"
+                />
+                <label htmlFor="image-upload" className="border border-gray-300 rounded-md w-full h-40 flex flex-col items-center justify-center bg-gray-100 cursor-pointer">
+                  {image ? (
+                    <img src={image.preview} alt="product image" className="w-full h-full object-cover rounded-md" />
+                  ) : (
+                    <>
+                      <img src={cameraIcon} alt="Camera Icon" className="w-8 h-8" />
+                      <p className="text-sm text-gray-500 mt-2">Click to start</p>
+                    </>
+                  )}
+                </label>
+              </div>
+            </div>
 
             {/* Schedule and Publish */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-[#2B366F] font-medium text-sm">Schedule Post:</span>
-                <div className="flex items-center rounded-md border border-input bg-background px-3 py-1 text-sm text-muted-foreground">
-                  <CalendarIcon className="mr-2 h-4 w-4 opacity-50" />--/--/--
-                </div>
-              </div>
               <Button type="submit" className="bg-[#2B366F] hover:bg-[#424c75] text-white">
                 Publish
               </Button>

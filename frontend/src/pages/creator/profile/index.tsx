@@ -10,8 +10,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Pencil } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function ProfileDisplayUi() {
+  const [firstName, setFirstName] = useState('');
+
+  useEffect(() => {
+    const userFirstName = localStorage.getItem('firstName');
+    if (userFirstName) {
+      setFirstName(userFirstName);
+    }
+  }, []);
   return (
     <div className="min-h-screen w-full bg-[#E7EAF8] px-4">
       <div className="w-full rounded-2xl bg-white/60 p-6 shadow-xl backdrop-blur text-center space-y-5">
@@ -24,7 +33,7 @@ export default function ProfileDisplayUi() {
         </div>
 
         {/* Username */}
-        <h2 className="text-xl font-semibold text-[#2B366F]">Dara_1</h2>
+        <h2 className="text-xl font-semibold text-[#2B366F]">{firstName}</h2>
 
         {/* Email */}
         <div className="relative">

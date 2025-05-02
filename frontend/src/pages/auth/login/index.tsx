@@ -49,29 +49,32 @@ export default function Login() {
       const response = await axios.post(`${API_URL}/api/auth/login`, values);
 
       console.log(response);
-      // the API response contains an access token
       const { accessToken } = response.data;
-
-      // Save the token in localStorage
       localStorage.setItem("accessToken", accessToken);
 
-      // Decode the token to get user details
       const decodedToken = jwtDecode(accessToken) as {
         id: string;
         email: string;
         firstName: string;
         lastName?: string;
+        role: string;
       };
 
-      // Extract the user details
-      const { id, email, firstName, lastName } = decodedToken;
+      const { id, email, firstName, lastName, role } = decodedToken;
 
-      console.log("Decoded Token:", { id, email, firstName, lastName });
+      console.log("Decoded Token:", { id, email, firstName, lastName, role });
 
-      const capitalizedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+      const capitalizedFirstName =
+        firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
       localStorage.setItem("firstName", capitalizedFirstName);
 
-      navigate("/user/latest-news");
+      console.log(role)
+      // Navigate based on role
+      if (role === "creator") {
+        navigate("/admin/profile");
+      } else {
+        navigate("/user/latest-news");
+      }
     } catch (error: any) {
       const errorMessage =
         error.response?.data?.message || "An unexpected error occurred.";
@@ -86,6 +89,7 @@ export default function Login() {
       setLoading(false);
     }
   }
+
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();

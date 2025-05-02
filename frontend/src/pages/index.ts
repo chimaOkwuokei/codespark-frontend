@@ -15,9 +15,9 @@ import ScienceNewsUi from "./home/science";
 import OnboardingFormUi from "./onboarding";
 import HeroUi from "./onboarding/cta";
 import UserLayout from "./home/user-layout";
-import AdminLayout from "./admin/admin-layout";
-import CreateNewsUi from "./admin/news";
-import ProfileDisplayUi from "./admin/profile";
+import AdminLayout from "./creator/admin-layout";
+import CreateNewsUi from "./creator/news";
+import ProfileDisplayUi from "./creator/profile";
 
 export {
     Login,
