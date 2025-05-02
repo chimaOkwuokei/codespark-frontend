@@ -1,9 +1,10 @@
 import './index.css'
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
-import { BusinessNewsUi, EntertainmentNewsUi, HealthNewsUi, LatestNewsUi, Login, NationalNewsUi, OnboardingFormUi, ScienceNewsUi, SignUp, SportNewsUi, TechnologyNewsUi, WorldNewsUi } from './pages'
+import { BusinessNewsUi, HeroUi, EntertainmentNewsUi, HealthNewsUi, LatestNewsUi, Login, NationalNewsUi, OnboardingFormUi, ScienceNewsUi, SignUp, SportNewsUi, TechnologyNewsUi, WorldNewsUi } from './pages'
 import { AppSidebar } from "@/components/app-sidebar";
 import { useEffect, useState } from 'react';
+
 
 function UserLayout() {
   const [firstName, setFirstName] = useState('');
@@ -95,8 +96,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* TODO: Protect the routes */}
+        <Route path="/" element={<HeroUi />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/channel-subscription" element={<OnboardingFormUi />} />
         {/* <Route path="/signin-categories" element={<CategoriesUi />} />
         <Route path="/signin-channel" element={<DeliveryChannelSelectionUi />} /> */}

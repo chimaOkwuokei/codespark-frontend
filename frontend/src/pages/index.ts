@@ -13,6 +13,7 @@ import TechnologyNewsUi from "./home/technology";
 import HealthNewsUi from "./home/health";
 import ScienceNewsUi from "./home/science";
 import OnboardingFormUi from "./onboarding";
+import HeroUi from "./onboarding/cta";
 export {
     Login,
     SignUp,
@@ -28,5 +29,6 @@ export {
     TechnologyNewsUi,
     HealthNewsUi,
     ScienceNewsUi,
-    OnboardingFormUi
+    OnboardingFormUi,
+    HeroUi
 }
