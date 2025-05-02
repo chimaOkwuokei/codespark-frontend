@@ -50,7 +50,7 @@ export default function HeroUi() {
                         Welcome To PAU Pulse
                     </h1>
                     <span className="italic font-light text-xl sm:text-2xl md:text-3xl block mt-2">
-                        Your Campus. Your Pulse.
+                        Your Campus, Personalized.
                     </span>
 
                     <p className="mt-4 text-base sm:text-lg text-gray-200">
