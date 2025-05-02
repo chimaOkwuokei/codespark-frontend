@@ -207,23 +207,41 @@ const OnboardingFormUi = () => {
                                 </h1>
 
                                 <div className="flex flex-wrap justify-center gap-10 mb-6">
-                                    {channelsData.map(channel => (
-                                        <div
-                                            key={channel.id}
-                                            onClick={() => toggleChannel(channel.name)}
-                                            className={clsx(
-                                                "cursor-pointer rounded-2xl p-2 transition-transform hover:scale-105",
-                                                selectedChannel === channel.name ? "ring-4 ring-[#2B366F]" : "ring-2 ring-transparent"
-                                            )}
-                                        >
-                                            <img
-                                                src={`/${channel.name}.svg`}
-                                                alt={channel.name}
-                                                className="w-24 sm:w-28 md:w-32"
-                                            />
-                                        </div>
-                                    ))}
+                                    {channelsData.map(channel => {
+                                        const isSnapchat = channel.name.toLowerCase() === "snapchat";
+                                        return (
+                                            <div
+                                                key={channel.id}
+                                                onClick={() => {
+                                                    if (!isSnapchat) toggleChannel(channel.name);
+                                                }}
+                                                className={clsx(
+                                                    "relative rounded-2xl p-2 transition-transform",
+                                                    isSnapchat ? "cursor-not-allowed opacity-70" : "cursor-pointer hover:scale-105",
+                                                    selectedChannel === channel.name && !isSnapchat
+                                                        ? "ring-4 ring-[#2B366F]"
+                                                        : "ring-2 ring-transparent"
+                                                )}
+                                            >
+                                                <img
+                                                    src={`/${channel.name}.svg`}
+                                                    alt={channel.name}
+                                                    className="w-24 sm:w-28 md:w-32 rounded-xl"
+                                                />
+
+                                                {isSnapchat && (
+                                                    <img
+                                                        src="/coming-soon-overlay.png"
+                                                        // src="/coming-soon.png"
+                                                        alt="Coming Soon"
+                                                        className="absolute inset-0 w-full h-full object-contain rounded-xl pointer-events-none"
+                                                    />
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
+
 
 
                                 <div className="flex justify-between px-4">
