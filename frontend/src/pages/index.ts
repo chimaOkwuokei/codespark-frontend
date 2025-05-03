@@ -18,7 +18,7 @@ import UserLayout from "./home/user-layout";
 import AdminLayout from "./creator/admin-layout";
 import CreateNewsUi from "./creator/news";
 import ProfileDisplayUi from "./creator/profile";
-
+import NoMatch from "./no-match/NoMatch";
 export {
     Login,
     SignUp,
@@ -40,4 +40,5 @@ export {
     AdminLayout,
     CreateNewsUi,
     ProfileDisplayUi,
+    NoMatch
 }
