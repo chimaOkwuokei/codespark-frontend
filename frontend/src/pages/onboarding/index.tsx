@@ -47,7 +47,7 @@ const OnboardingFormUi = () => {
     const { setValue, getValues, watch } = form;
 
     useEffect(() => {
-        const storedName = localStorage.getItem("firstname");
+        const storedName = localStorage.getItem("firstName");
         setName(storedName);
     }, []);
 
