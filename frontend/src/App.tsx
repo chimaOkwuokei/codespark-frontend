@@ -1,7 +1,7 @@
 import './index.css'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { BusinessNewsUi, HeroUi, EntertainmentNewsUi, HealthNewsUi, LatestNewsUi, Login, NationalNewsUi, OnboardingFormUi, ScienceNewsUi, SignUp, SportNewsUi, TechnologyNewsUi, WorldNewsUi, UserLayout, AdminLayout, CreateNewsUi, ProfileDisplayUi, NoMatch } from './pages';
-import ProtectedRedirect from './utils/ProtectedRedirect'
+// import ProtectedRedirect from './utils/ProtectedRedirect'
 import UserProtectedRoute from './utils/UserProtectedRoute';
 import AdminProtectedRoute from './utils/AdminProtectedRoute';
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ProtectedRedirect />} />
+        {/* <Route path="/" element={<ProtectedRedirect />} /> */}
         
         <Route path="/" element={<HeroUi />} />
         <Route path="/login" element={<Login />} />
